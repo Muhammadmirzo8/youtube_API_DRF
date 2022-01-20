@@ -1,6 +1,4 @@
 from django.db import models
-
-from django.db import models
 from django.conf import settings
 
 class Video(models.Model): 
@@ -43,4 +41,12 @@ class Comment(models.Model):
         else:
             return 0
     def __str__(self): 
-        return self.text
+        return self.text 
+
+class Playlist(models.Model): 
+    name = models.CharField(max_length=150) 
+    channel =  models.ForeignKey(settings.CHANNEL_MODEL, related_name='posted', on_delete=models.SET_NULL, null=True, blank=True)
+    video = models.ManyToManyField(Video)
+    
+    def __str__(self): 
+        return self.name
